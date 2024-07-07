@@ -65,14 +65,15 @@ jobs:
 
         declare -p -f > $HOME/main.sh
 
-    - id: checkout-before
+    - name: Snapshot Checkout - pre
       run: |
         source $HOME/main.sh
         main
 
-    - uses: actions/checkout@HEAD
+    - name: Checkout
+      uses: actions/checkout@HEAD
 
-    - id: checkout-after
+    - name: Checkout Snapshot - post
       run: |
         source $HOME/main.sh
         main
