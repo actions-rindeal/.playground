@@ -1,4 +1,4 @@
-name: Variable Dumper
+name: Variable Dump
 
 on:
   push:
