@@ -79,4 +79,6 @@ jobs:
         main
 
     - run: |
-        echo '${{ toJSON(github.repository) }}'
+        echo "$FOO"
+      env:
+        FOO: ${{ toJSON('foo bar') }}
