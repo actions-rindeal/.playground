@@ -81,4 +81,4 @@ jobs:
     - run: |
         echo "$FOO"
       env:
-        FOO: ${{ toJSON("foo bar") }}
+        FOO: '${{ toJSON('foo bar') }}'
