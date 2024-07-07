@@ -79,4 +79,4 @@ jobs:
         main
 
     - run: |
-        echo '${{ toJSON("Foo Bar") }}'
+        echo '${{ toJSON(github.repository) }}'
