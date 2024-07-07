@@ -1,4 +1,4 @@
-name: Test-2 Workflow Name
+name: Variable Dumper
 
 on:
   push:
