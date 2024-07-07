@@ -5,6 +5,7 @@ on:
     paths:
     - .github/workflows/vardump.yml
   workflow_dispatch:
+  repository_dispatch:
 
 jobs:
   my-job:
