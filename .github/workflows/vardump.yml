@@ -73,7 +73,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@HEAD
 
-    - name: Checkout Snapshot - post
+    - name: Snapshot Checkout - post
       run: |
         source $HOME/main.sh
         main
