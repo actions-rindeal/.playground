@@ -1,0 +1,78 @@
+name: Test-2 Workflow Name
+
+on:
+  push:
+    paths:
+    - .github/workflows/vardump.yml
+  workflow_dispatch:
+
+jobs:
+  my-job:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+    - id: init
+      run: |
+        pprint_env_vars() {
+            echo "Env:"
+            env | sort | awk -F '=' '{ printf("  %-25s = `", $1); for (i = 2; i <= NF; i++) printf("%s", $i); print "`"; }'
+        }
+        
+        maybe_pprint_file_content() {
+            local var="$1"
+            local value="$2"
+            local realpath="$3"
+            
+            { file --mime-encoding "$realpath" 2>/dev/null || true ; } | grep -q "binary" && return 1 || true
+            
+            printf '%s = `%s`' "$var" "$value"
+            [[ "$value" != "$realpath" ]] && echo " {'$realpath'}" || echo
+        
+            if [[ "$(file -b --mime-type "$value")" == "application/json" ]]; then
+                echo "  JSON content:"
+                echo "  ============="
+                jq -C -S . "$value" | sed 's/^/    /'
+            else
+                echo "  Content:"
+                echo "  ========"
+                sed -e 's/^/    /' -- "$value"
+            fi
+        }
+        main() {
+            # Main script starts here
+            declare -A ENV_VAR_FILE_BLACKLIST=(
+                [CHROME_BIN]=1
+            )
+            
+            pprint_env_vars
+
+            echo
+
+            for var in $(compgen -e); do
+                (( ${ENV_VAR_FILE_BLACKLIST[$var]} )) && continue || true
+            
+                value="${!var}"
+                realpath="$(realpath "$value" 2>/dev/null || true)"
+                if [[ -n "${realpath}" && -f "${realpath}" ]]; then
+                    maybe_pprint_file_content "$var" "$value" "$realpath" || true
+                    echo
+                fi
+            done
+        }
+
+        declare -p -f > $HOME/main.sh
+
+    - id: stage-1
+      run: |
+        source $HOME/main.sh
+        main
+
+    - uses: actions/checkout@HEAD
+
+    - id: stage-2
+      run: |
+        source $HOME/main.sh
+        main
+        
