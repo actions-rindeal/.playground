@@ -65,14 +65,14 @@ jobs:
 
         declare -p -f > $HOME/main.sh
 
-    - id: stage-1
+    - id: checkout-before
       run: |
         source $HOME/main.sh
         main
 
     - uses: actions/checkout@HEAD
 
-    - id: stage-2
+    - id: checkout-after
       run: |
         source $HOME/main.sh
         main
