@@ -5,6 +5,9 @@ on:
     paths:
     - .github/workflows/vardump.yml
   workflow_dispatch:
+    inputs:
+      foo:
+        description: Foo
   repository_dispatch:
 
 jobs:
