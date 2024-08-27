@@ -1,9 +1,9 @@
-name: Variable Dump
+name: Dump Env
 
 on:
   push:
     paths:
-    - .github/workflows/vardump.yml
+    - .github/workflows/Dump-Env.yml
   workflow_dispatch:
     inputs:
       foo:
