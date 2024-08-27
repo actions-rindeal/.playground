@@ -31,7 +31,7 @@ jobs:
         run: |
           latest_commit_date=$(git log -1 --format=%cd --date=iso)
           cutoff_date=$(date -d "$latest_commit_date -1 day" --iso-8601=seconds)
-          git filter-repo --commit-callback '
+          git filter-repo --force --commit-callback '
             if commit.committer_date < cutoff_date:
               commit.skip()
           '
