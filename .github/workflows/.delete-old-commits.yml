@@ -1,0 +1,39 @@
+name: Delete Old Commits
+
+on:
+  schedule:
+    - cron: "0 0 * * *" # Runs daily at midnight
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/.delete-old-commits.yml
+
+jobs:
+  delete_old_commits:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@main
+
+      - name: Set up Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: Delete old commits
+        run: |
+          latest_commit_date=$(git log -1 --format=%cd --date=iso)
+          cutoff_date=$(date -d "$latest_commit_date -1 day" --iso-8601=seconds)
+          git filter-branch --force --commit-filter '
+            if [ "$GIT_COMMITTER_DATE" \< "$cutoff_date" ]; then
+              skip_commit "$@";
+            else
+              git commit-tree "$@";
+            fi' -- --all
+
+      - name: Force push changes
+        run: |
+          git status
+          git log
+          # git push origin --force --all
