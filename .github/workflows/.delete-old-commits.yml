@@ -21,19 +21,26 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
+      - name: Install git-filter-repo
+        run: |
+          pip install git-filter-repo
+
       - name: Delete old commits
         run: |
           latest_commit_date=$(git log -1 --format=%cd --date=iso)
           cutoff_date=$(date -d "$latest_commit_date -1 day" --iso-8601=seconds)
-          git filter-branch --force --commit-filter '
-            if [ "$GIT_COMMITTER_DATE" \< "$cutoff_date" ]; then
-              skip_commit "$@";
-            else
-              git commit-tree "$@";
-            fi' -- --all
+          git filter-repo --commit-callback '
+            if commit.committer_date < cutoff_date:
+              commit.skip()
+          '
+
+      - name: Dry run - Print git log
+        if: github.event_name == 'schedule'
+        run: |
+          git log --oneline
 
       - name: Force push changes
+        if: github.event_name != 'schedule'
         run: |
-          git status
-          git log
-          # git push origin --force --all
+          git push origin --force --all
+
