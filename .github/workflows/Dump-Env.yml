@@ -11,7 +11,7 @@ on:
   repository_dispatch:
 
 jobs:
-  my-job:
+  dump-env:
     runs-on: ubuntu-latest
     defaults:
       run:
