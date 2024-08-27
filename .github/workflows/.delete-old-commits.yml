@@ -31,6 +31,8 @@ jobs:
         run: |
           git filter-repo --force --commit-callback '
               import datetime
+              from git_filter_repo import Repo
+              repo = Repo(".")
               latest_commit_time = datetime.datetime.fromtimestamp(int(repo.head.commit.author_date.decode("utf-8").split()[0]))
               one_day_ago = latest_commit_time - datetime.timedelta(days=1)
               commit_time = datetime.datetime.fromtimestamp(int(commit.author_date.decode("utf-8").split()[0]))
