@@ -36,7 +36,7 @@ jobs:
           ONE_DAY_AGO=$((LATEST_COMMIT_TIMESTAMP - 86400))
           
           # Use git-filter-repo to keep only commits from the last day
-          git-filter-repo --force --invert-paths --path-match . --before $ONE_DAY_AGO
+          git-filter-repo --force --invert-paths --path-glob '*' --before $ONE_DAY_AGO
 
       - name: Dry run - Print git log
         if: github.event_name != 'schedule'
