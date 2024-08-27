@@ -1,4 +1,4 @@
-name: Dump PATH Environment Variable
+name: Dump PATH
 
 on:
   push:
