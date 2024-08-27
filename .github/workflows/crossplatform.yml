@@ -23,5 +23,5 @@ jobs:
       - name: Dump PATH
         run: |
           echo "PATH environment variable:"
-          echo "$PATH" | xargs -d: -n1
+          echo "$PATH" | tr ':' '\n' | xargs -n1
         shell: bash
