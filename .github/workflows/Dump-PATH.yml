@@ -21,4 +21,8 @@ jobs:
         run: |
           echo "PATH environment variable:"
           printf "%s\n" "${PATH}" | tr ':' '\n'
+          echo "# ${{ matrix.os }}" >> $GITHUB_STEP_SUMMARY
+          echo "${{ matrix.os }}" >> $GITHUB_STEP_SUMMARY
+          echo "${{ matrix.os }}" >> $GITHUB_STEP_SUMMARY
+          echo "${{ matrix.os }}" >> $GITHUB_STEP_SUMMARY
         shell: bash
