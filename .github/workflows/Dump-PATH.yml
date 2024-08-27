@@ -3,11 +3,11 @@ name: Dump PATH Environment Variable
 on:
   push:
     paths:
-      - .github/workflows/crossplatform.yml
+      - .github/workflows/Dump-PATH.yml
   workflow_dispatch:
 
 jobs:
-  dump-path:
+  'dump-path':
     strategy:
       matrix:
         os:
@@ -17,11 +17,8 @@ jobs:
           - macos-13      # Intel
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Check out repository
-        uses: actions/checkout@main
-
       - name: Dump PATH
         run: |
           echo "PATH environment variable:"
-          echo "$PATH" | tr ':' '\n' | xargs -n1
+          printf "%s\n" "${PATH}" | tr ':' '\n' | xargs -n1
         shell: bash
