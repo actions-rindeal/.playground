@@ -29,12 +29,14 @@ jobs:
 
       - name: Delete old commits
         run: |
-          latest_commit_date=$(git log -1 --format=%cd --date=iso)
-          cutoff_date=$(date -d "$latest_commit_date -1 day" --iso-8601=seconds)
-          git filter-repo --force --commit-callback '
-            if commit.committer_date < cutoff_date:
-              commit.skip()
-          '
+          git filter-repo --commit-callback '
+              import datetime
+              latest_commit_time = datetime.datetime.fromtimestamp(int(repo.head.commit.author_date.decode("utf-8").split()[0]))
+              one_day_ago = latest_commit_time - datetime.timedelta(days=1)
+              commit_time = datetime.datetime.fromtimestamp(int(commit.author_date.decode("utf-8").split()[0]))
+              if commit_time < one_day_ago:
+                  commit.skip()
+              '
 
       - name: Dry run - Print git log
         if: github.event_name != 'schedule'
