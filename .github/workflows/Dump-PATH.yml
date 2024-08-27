@@ -20,9 +20,7 @@ jobs:
       - name: Dump PATH
         run: |
           echo "PATH environment variable:"
-          printf "%s\n" "${PATH}" | tr ':' '\n'
-          echo "# ${{ matrix.os }}" >> $GITHUB_STEP_SUMMARY
-          echo "${{ matrix.os }}" >> $GITHUB_STEP_SUMMARY
-          echo "${{ matrix.os }}" >> $GITHUB_STEP_SUMMARY
-          echo "${{ matrix.os }}" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
+          printf "%s\n" "${PATH}" | tr ':' '\n' | tee -a "${GITHUB_STEP_SUMMARY}"
+          echo '```' >> "${GITHUB_STEP_SUMMARY}"
         shell: bash
