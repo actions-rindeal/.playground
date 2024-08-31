@@ -16,3 +16,8 @@ jobs:
           # FOO-BAR: "value-FOO-BAR"
           foo_bar: "value_foo_bar"
           # Foo-Bar: "value-Foo-Bar"
+
+      - run: |
+          echo "${JSON}" | jq -C .
+        env:
+          JSON: ${{ toJson(GitHub.Workspace) }}
