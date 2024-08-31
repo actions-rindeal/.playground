@@ -19,6 +19,6 @@ jobs:
         uses: ./.github/actions/input-aliasing-demo
         with:
           foo-bar: "value-foo-bar"
-          # FOO-BAR: "value-FOO-BAR"
+          # FOO-BAR: "value-FOO-BAR"  # <-- Error: 'FOO-BAR' is already defined
           foo_bar: "value_foo_bar"
-          # Foo-Bar: "value-Foo-Bar"
+          # Foo-Bar: "value-Foo-Bar"  # <-- Error: 'Foo-Bar' is already defined
