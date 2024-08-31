@@ -6,7 +6,7 @@ inputs:
     description: "Input with dash"
     required: false
     default: "default-foo-bar"
-  # FOO-BAR:
+  # FOO-BAR:  # <-- Error: 'FOO-BAR' is already defined
   #   description: "Input with uppercase dash"
   #   required: false
   #   default: "default-FOO-BAR"
@@ -14,7 +14,7 @@ inputs:
     description: "Input with underscore"
     required: false
     default: "default_foo_bar"
-  # Foo-Bar:
+  # Foo-Bar:  # <-- Error: 'Foo-Bar' is already defined
   #   description: "Input with mixed case dash"
   #   required: false
   #   default: "default-Foo-Bar"
