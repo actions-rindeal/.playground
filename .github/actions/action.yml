@@ -1,0 +1,24 @@
+name: "Input Aliasing Demo"
+description: "Demonstrates input name aliasing/shadowing issues"
+
+inputs:
+  foo-bar:
+    description: "Input with dash"
+    required: false
+    default: "default-foo-bar"
+  FOO-BAR:
+    description: "Input with uppercase dash"
+    required: false
+    default: "default-FOO-BAR"
+  foo_bar:
+    description: "Input with underscore"
+    required: false
+    default: "default_foo_bar"
+  Foo-Bar:
+    description: "Input with mixed case dash"
+    required: false
+    default: "default-Foo-Bar"
+
+runs:
+  using: "node20"
+  main: "index.js"
