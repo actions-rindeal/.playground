@@ -1,0 +1,18 @@
+name: "Input Aliasing Demo Workflow"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  input-aliasing-demo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+
+      - name: Run Input Aliasing Demo
+        uses: ./.github/actions/input-aliasing-demo
+        with:
+          foo-bar: "value-foo-bar"
+          FOO-BAR: "value-FOO-BAR"
+          foo_bar: "value_foo_bar"
+          Foo-Bar: "value-Foo-Bar"
