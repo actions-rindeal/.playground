@@ -9,6 +9,11 @@ jobs:
     steps:
       - uses: actions/checkout@main
 
+      - run: |
+          echo "${JSON}" | jq -C .
+        env:
+          JSON: ${{ toJson(GitHub.Workspace) }}
+
       - name: Run Input Aliasing Demo
         uses: ./.github/actions/input-aliasing-demo
         with:
@@ -16,8 +21,3 @@ jobs:
           # FOO-BAR: "value-FOO-BAR"
           foo_bar: "value_foo_bar"
           # Foo-Bar: "value-Foo-Bar"
-
-      - run: |
-          echo "${JSON}" | jq -C .
-        env:
-          JSON: ${{ toJson(GitHub.Workspace) }}
