@@ -1,0 +1,22 @@
+name: "Matrix Variables as Step IDs"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  'demo':
+    runs-on: 'ubuntu-latest'
+    strategy:
+      matrix:
+        version: [10, 12, 14]
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - name: "Dummy Step ${{ matrix.version }} ${{ matrix.os }}"
+        id: step_${{ matrix.version }}_${{ matrix.os }}
+        run: echo "This is a dummy step for version ${{ matrix.version }} on ${{ matrix.os }}"
+
+      - name: "Dump"
+        run: echo "${STEPS}" | jq -C .
+        env:
+          'STEPS': ${{ toJSON(steps) }}
