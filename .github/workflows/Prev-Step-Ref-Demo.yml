@@ -63,8 +63,8 @@ jobs:
         uses: 'actions/github-script@main'
         with:
           script: |
-            const steps = JSON.parse(process.env['OUTPUTS'])
-            const prevStepOutputs = steps[Object.keys(steps).pop()]
+            const outputs = JSON.parse(process.env['OUTPUTS'])
+            const prevStepOutputs = steps[Object.keys(outputs).pop()]
 
             console.log(prevStepOutputs)
             // {
