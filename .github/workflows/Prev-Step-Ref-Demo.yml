@@ -26,11 +26,13 @@ jobs:
         run: echo "value=STEP_2" >> $GITHUB_OUTPUT
 
       - name: Use the output from the previous step
-        # run: echo "The output from the previous step is: "
-        shell: node {0}
-        run: |
-          const steps = JSON.parse(process.env['STEPS'])
-          const prevStep = steps[Object.keys(steps).pop()]
-          console.log(prevStep)
+        uses: actions/github-script@main
+        with:
+          script: |
+            const steps = JSON.parse(process.env['STEPS'])
+            const prevStep = steps[Object.keys(steps).pop()]
+            console.log(prevStep)
+            core.summary.addHeading('Previous step', '2')
+            core.summary.addCodeBlock(JSON.stringify(prevStep), 'json')
         env:
           'STEPS': ${{ toJSON(steps) }}
