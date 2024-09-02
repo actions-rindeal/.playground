@@ -44,7 +44,7 @@ jobs:
           'STEPS': ${{ toJSON(steps) }}
 
 
-      - name: "Filter only values"
+      - name: "Filter only outputs"
         uses: 'actions/github-script@main'
         with:
           script: |
@@ -57,4 +57,4 @@ jobs:
             core.summary.addCodeBlock(JSON.stringify(prevStep, null, "  "), 'json')
             core.summary.write()
         env:
-          'STEPS': ${{ toJSON(steps.*.values) }}
+          'STEPS': ${{ toJSON(steps.*.outputs) }}
