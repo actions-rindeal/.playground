@@ -14,19 +14,22 @@ jobs:
 
     steps:
       - name: "Step #0"
-        id: step0
-        run: echo "value=STEP_0" >> $GITHUB_OUTPUT
+        id: 'step0'
+        run: |
+          echo "value=STEP_0_VALUE" >> $GITHUB_OUTPUT
 
       - name: "Step #1"
-        id: step1
-        run: echo "value=STEP_1" >> $GITHUB_OUTPUT
+        id: 'step1'
+        run: |
+          echo "value=STEP_1_VALUE" >> $GITHUB_OUTPUT
 
       - name: "Step #2"
-        id: step2
-        run: echo "value=STEP_2" >> $GITHUB_OUTPUT
+        id: 'step2'
+        run: |
+          echo "value=STEP_2_VALUE" >> $GITHUB_OUTPUT
 
-      - name: Use the output from the previous step
-        uses: actions/github-script@main
+      - name: "Use the output from the previous step"
+        uses: 'actions/github-script@main'
         with:
           script: |
             const steps = JSON.parse(process.env['STEPS'])
