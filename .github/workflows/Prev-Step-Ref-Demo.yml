@@ -34,5 +34,6 @@ jobs:
             console.log(prevStep)
             core.summary.addHeading('Previous step', '2')
             core.summary.addCodeBlock(JSON.stringify(prevStep), 'json')
+            core.summary.write()
         env:
           'STEPS': ${{ toJSON(steps) }}
