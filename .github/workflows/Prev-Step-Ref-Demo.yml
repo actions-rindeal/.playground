@@ -16,17 +16,23 @@ jobs:
       - name: "Step #0"
         id: 'step0'
         run: |
-          echo "value=STEP_0_VALUE" >> $GITHUB_OUTPUT
+          echo "output1=STEP_0_VALUE1" >> $GITHUB_OUTPUT
+          echo "output2=STEP_0_VALUE2" >> $GITHUB_OUTPUT
+          echo "output3=STEP_0_VALUE3" >> $GITHUB_OUTPUT
 
       - name: "Step #1"
         id: 'step1'
         run: |
-          echo "value=STEP_1_VALUE" >> $GITHUB_OUTPUT
+          echo "output1=STEP_1_VALUE1" >> $GITHUB_OUTPUT
+          echo "output2=STEP_1_VALUE2" >> $GITHUB_OUTPUT
+          echo "output3=STEP_1_VALUE3" >> $GITHUB_OUTPUT
 
       - name: "Step #2"
         id: 'step2'
         run: |
-          echo "value=STEP_2_VALUE" >> $GITHUB_OUTPUT
+          echo "output1=STEP_2_VALUE1" >> $GITHUB_OUTPUT
+          echo "output2=STEP_2_VALUE2" >> $GITHUB_OUTPUT
+          echo "output3=STEP_2_VALUE3" >> $GITHUB_OUTPUT
 
       - name: "Use the output from the previous step"
         uses: 'actions/github-script@main'
@@ -36,6 +42,13 @@ jobs:
             const prevStep = steps[Object.keys(steps).pop()]
 
             console.log(prevStep)
+            // {
+            //   "outputs": {
+            //     "value": "STEP_2_VALUE"
+            //   },
+            //   "outcome": "success",
+            //   "conclusion": "success"
+            // }
 
             core.summary.addHeading('Previous step', '2')
             core.summary.addCodeBlock(JSON.stringify(prevStep, null, "  "), 'json')
@@ -48,13 +61,13 @@ jobs:
         uses: 'actions/github-script@main'
         with:
           script: |
-            const steps = JSON.parse(process.env['STEPS'])
-            const prevStep = steps[Object.keys(steps).pop()]
+            const steps = JSON.parse(process.env['OUTPUTS'])
+            const prevStepOutputs = steps[Object.keys(steps).pop()]
 
-            console.log(prevStep)
+            console.log(prevStepOutputs)
 
-            core.summary.addHeading('Previous step', '2')
-            core.summary.addCodeBlock(JSON.stringify(prevStep, null, "  "), 'json')
+            core.summary.addHeading('Previous step outputs', '2')
+            core.summary.addCodeBlock(JSON.stringify(prevStepOutputs, null, "  "), 'json')
             core.summary.write()
         env:
-          'STEPS': ${{ toJSON(steps.*.outputs) }}
+          'OUTPUTS': ${{ toJSON(steps.*.outputs) }}
