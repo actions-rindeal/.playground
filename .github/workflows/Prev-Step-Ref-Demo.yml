@@ -31,7 +31,9 @@ jobs:
           script: |
             const steps = JSON.parse(process.env['STEPS'])
             const prevStep = steps[Object.keys(steps).pop()]
+
             console.log(prevStep)
+
             core.summary.addHeading('Previous step', '2')
             core.summary.addCodeBlock(JSON.stringify(prevStep, null, "  "), 'json')
             core.summary.write()
