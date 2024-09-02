@@ -22,7 +22,10 @@ jobs:
 
       - name: Use the output from the previous step
         # run: echo "The output from the previous step is: "
+        shell: node {0}
         run: |
-          echo "${STEPS}" | jq -C .
+          const steps = JSON.parse(process.env['STEPS'])
+          const prevStep = steps[Object.keys(steps).pop()]
+          console.log(prevStep)
         env:
-          STEPS: ${{ toJSON(steps) }}
+          'STEPS': ${{ toJSON(steps) }}
