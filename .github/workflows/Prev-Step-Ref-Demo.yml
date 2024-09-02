@@ -44,7 +44,9 @@ jobs:
             console.log(prevStep)
             // {
             //   "outputs": {
-            //     "value": "STEP_2_VALUE"
+            //     "output1": "STEP_2_VALUE1",
+            //     "output2": "STEP_2_VALUE2",
+            //     "output3": "STEP_2_VALUE3"
             //   },
             //   "outcome": "success",
             //   "conclusion": "success"
@@ -65,6 +67,11 @@ jobs:
             const prevStepOutputs = steps[Object.keys(steps).pop()]
 
             console.log(prevStepOutputs)
+            // {
+            //   "output1": "STEP_2_VALUE1",
+            //   "output2": "STEP_2_VALUE2",
+            //   "output3": "STEP_2_VALUE3"
+            // }
 
             core.summary.addHeading('Previous step outputs', '2')
             core.summary.addCodeBlock(JSON.stringify(prevStepOutputs, null, "  "), 'json')
