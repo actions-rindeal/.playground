@@ -1,6 +1,11 @@
 name: "Previous Step Referencing Demo"
 
 on:
+  push:
+    branches:
+      - master
+    paths:
+      - ".github/workflows/Prev-Step-Ref-Demo.yml"
   workflow_dispatch:
 
 jobs:
